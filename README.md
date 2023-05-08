@@ -12,10 +12,15 @@ Hive is a NoSQL database solution for Flutter applications. It's a fast, efficie
 dependencies:
 
 hive: ^2.2.3
+<br>
 hive_flutter: ^1.1.0
+<br>
 build_runner: ^2.3.3
+<br>
 hive_generator: ^2.0.0
+<br>
 path_provider: ^2.0.14
+<br>
 
 This will include the Hive core library and the Hive Flutter adapter, which you need to use Hive with Flutter.
 
@@ -23,10 +28,14 @@ This will include the Hive core library and the Hive Flutter adapter, which you 
 ## 2.Initialize Hive in your app's main() function:
 
 await Hive.initFlutter();
+<br>
+
 This initializes Hive with the default settings. You can also provide a path to the directory where you want to store your Hive data files:
 
 final appDocumentDirectory = await getApplicationDocumentsDirectory();
+<br>
 await Hive.initFlutter(appDocumentDirectory.path);
+<br>
 
 
 ## 3.Generate a model class: 
@@ -34,21 +43,32 @@ Define a model class that will be used to store data in Hive. The class should e
 For example:
 
 import 'package:hive/hive.dart';
+<br>
 
 part 'person.g.dart';
+<br>
 
 @HiveType(typeId: 0)
+<br>
+
 class Person extends HiveObject {
+<br>
 @HiveField(0)
+<br>
 String name;
+<br>
 
 @HiveField(1)
+<br>
 String fatherName;
+<br>
 
 @HiveField(2)
+<br>
 String motherName;
-
+<br>
 Person({required this.name, required this.fatherName, required this.motherName});
+<br>
 }
 
 Note: the part 'person.g.dart'; line is used to generate a .g.dart file that contains the implementation for the HiveObject and TypeAdapter classes for this model.
@@ -56,48 +76,63 @@ Note: the part 'person.g.dart'; line is used to generate a .g.dart file that con
 
 ## 4.Generate a TypeAdapter: 
 A TypeAdapter is used to tell Hive how to convert an instance of the model class to and from bytes that can be stored in the database. To generate a TypeAdapter for the Person model, run the following command in the terminal:
+<br>
 
 flutter packages pub run build_runner build
 
+<br>
 This will generate the person.g.dart file that contains the implementation for the PersonAdapter class.
 
 ## 5.Register your data model classes with Hive:
-
 Hive.registerAdapter(MyDataModelAdapter());
+<br>
+<br>
 You need to create a HiveAdapter for each data model class that you want to store in Hive. This adapter maps the fields in your data model to Hive boxes and makes it possible to store and retrieve instances of your data model.
 
 
 ## 6.Open a Hive box:
-
 final myBox = await Hive.openBox('myBox');
+<br>
+
 Hive stores data in boxes. A box is a collection of key-value pairs, where the keys are strings and the values can be any data type that Hive supports. When you open a box, Hive loads the data from the box's data file on disk (if it exists) and makes it available to your app.
 
 ## 7.Save data to a Hive box:
-
 myBox.put('myKey', myData);
+<br>
+
 This saves myData to the box under the key 'myKey'. You can save any data type that Hive supports.
 
 ## 8.Retrieve data from a Hive box:
-
 final myData = myBox.get('myKey');
+<br>
+
 This retrieves the data from the box that is stored under the key 'myKey'. If the key doesn't exist, null is returned.
 
 ## 9.Listen for changes in a Hive box:
-
 myBox.listenable().addListener(() {
+<br>
 // Handle box changes here
+<br>
 });
+<br>
+
 This sets up a listener that is called whenever the data in the box changes. You can use this to update your UI when the data changes.
 
 ## 10.Close a Hive box:
-
 await myBox.close();
+<br>
+
 This closes the box and saves its data to the data file on disk. You should always close a box when you're done using it.
 
-## 11.Close Hive when your app exits:
 
+## 11.Close Hive when your app exits:
 await Hive.close();
+<br>
+
 This closes all open boxes and releases any resources that Hive is using. You should always close Hive when your app exits.
+
+
+
 
 
 # how to view stored data in Hive:
